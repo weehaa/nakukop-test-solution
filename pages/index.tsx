@@ -21,7 +21,7 @@ const Index: React.FC = () => {
     const[goods, setGoods] = useState<IGood[]>([] )
     useEffect(() => {
         async function loadGoods() {
-            const response = await fetch('https://raw.githubusercontent.com/weehaa/test_nakukop/master/products.json')
+            const response = await fetch(`${process.env.API_URL}/products.json`)
             const json: IResponse = await response.json()
             setGoods(json.Value.Goods)
         }

@@ -1,6 +1,6 @@
 const getExchangeRate = (): number => {
-    const max = 80
-    const min = 50
+    const max = +process.env.MAX_EXCHANGE_RATE
+    const min = +process.env.MIN_EXCHANGE_RATE
     return Math.floor(Math.random() * (max - min + 1)) + min
 }
 
