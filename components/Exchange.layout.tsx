@@ -1,15 +1,14 @@
-import React, {useEffect, useState} from 'react'
-import getExchangeRate from '../helpers/getExchangeRate'
+import React, {useEffect} from 'react'
+import { useStoreon } from '../store'
 
 const ExchangeLayout: React.FC = () => {
-    const [currentRate, setCurrentRate] = useState<number>(0)
+    const { dispatch, exchangeRate } = useStoreon('exchangeRate')
     useEffect(() => {
-        if (!currentRate) setCurrentRate(getExchangeRate())
-        let exchangeTimer = setTimeout(() => setCurrentRate(getExchangeRate()),
+        let exchangeTimer = setTimeout(() => dispatch('update'),
             +process.env.RATE_REFRESH_INTERVAL * 1000)
         return () => clearTimeout(exchangeTimer)
-    }, [currentRate])
-    return <p>Текущий курс: {currentRate}</p>
+    }, [exchangeRate])
+    return <p>Текущий курс: {exchangeRate}</p>
 }
 
 export default ExchangeLayout

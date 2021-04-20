@@ -3,7 +3,7 @@ import React from "react";
 
 const Cart: React.FC = () => {
     return (
-        <MainLayout>
+        <MainLayout title='Корзина'>
             <h1>Корзина</h1>
             <p>Ваша корзина пуста</p>
         </MainLayout>

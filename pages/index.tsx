@@ -1,8 +1,8 @@
-import Head from "next/head"
-import MainLayout from "../components/Main.layout";
-import React, {useEffect, useState} from "react";
+import MainLayout from '../components/Main.layout';
+import React, {ReactNode, useEffect, useState} from 'react';
+import ErrorIndicator from '../components/ErrorIndicator/ErrorIndicator';
 
-interface IGood {
+interface Good {
     B: boolean,
     C: number,
     G: number,
@@ -10,30 +10,50 @@ interface IGood {
     T: number
 }
 
-interface IResponse {
+interface Response {
     Success: string,
     Value?: {
-        Goods: Array<IGood>
+        Goods: Array<Good>
     }
 }
 
+type ComponentState = 'error' | 'loading' | 'loaded'
+
 const Index: React.FC = () => {
-    const[goods, setGoods] = useState<IGood[]>([] )
+    const [state, setState] = useState<ComponentState>('loading')
+    const [goods, setGoods] = useState<Good[]>([] )
     useEffect(() => {
         async function loadGoods() {
             const response = await fetch(`${process.env.API_URL}/products.json`)
-            const json: IResponse = await response.json()
+            const json: Response = await response.json()
             setGoods(json.Value.Goods)
         }
         loadGoods()
-    }, [])
+            .then(() => setState('loaded'))
+            .catch(
+            err => {
+                console.log('error', err)
+                setState('error')
+            })
+     }, [])
+
+    let content: ReactNode;
+
+    switch (state) {
+        case 'error':
+            content =  <ErrorIndicator message='No response form server, please check your internet connection!'/>
+            break
+        case 'loading':
+            content = <div>Loading...</div>
+            break
+        case 'loaded':
+            content = <pre>{JSON.stringify(goods)}</pre>
+    }
+
     return (
-        <MainLayout>
-            <Head>
-                <title>Каталог товаров</title>
-            </Head>
+        <MainLayout title='Каталог товаров'>
             <h1>Каталог товаров</h1>
-            <pre>{JSON.stringify(goods)}</pre>
+            { content }
         </MainLayout>
     )
 }
