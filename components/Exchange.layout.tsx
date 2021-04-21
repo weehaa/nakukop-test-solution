@@ -4,7 +4,7 @@ import { useStoreon } from '../store'
 const ExchangeLayout: React.FC = () => {
     const { dispatch, exchangeRate } = useStoreon('exchangeRate')
     useEffect(() => {
-        let exchangeTimer = setTimeout(() => dispatch('update'),
+        let exchangeTimer = setTimeout(() => dispatch('exchangeRate/update'),
             +process.env.RATE_REFRESH_INTERVAL * 1000)
         return () => clearTimeout(exchangeTimer)
     }, [exchangeRate])
