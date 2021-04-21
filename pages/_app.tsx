@@ -1,15 +1,17 @@
-import {store} from '../store'
-import {StoreContext} from 'storeon/react'
 import React from 'react'
 import type { AppProps } from 'next/app'
+
+import {store} from '../store'
+import {CustomContext} from '../store'
+
 import ErrorBoundary from '../components/ErrorBoundary'
 
 export default function MyApp({ Component, pageProps }: AppProps) {
     return (
-        <StoreContext.Provider value={store}>
+        <CustomContext.Provider value={store}>
             <ErrorBoundary>
                 <Component {...pageProps} />
             </ErrorBoundary>
-        </StoreContext.Provider>
+        </CustomContext.Provider>
     )
 }
