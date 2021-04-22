@@ -7,15 +7,17 @@ export interface Items {
     [productId: number]: Item
 }
 
-export interface Category {
+export interface Group {
     G: string //name
     C: any
     B: Items
 }
 
 export interface Catalog {
-    [categoryId: number]: Category
+    [categoryId: number]: Group
 }
+
+export interface Category {}
 
 export interface Good {
     B: boolean
@@ -25,8 +27,9 @@ export interface Good {
     T: number   // product id
 }
 
+
+
 export interface State {
-    productsStatus: 'loaded' | 'loading' | 'error'
     // Exchange Rate State
     exchangeRate: number
     prevExchangeRate: number
@@ -35,11 +38,27 @@ export interface State {
     // Names State
     names: Catalog
     // products
-    products: Array<Good[] | Catalog >
+
+    categories: {
+        [id: number]: {
+            id: number
+            name: string
+        }
+    }
+
+    items: {
+        [id: number]: {
+            id: number
+            name: string
+            price: number
+            groupId: number
+            count: number
+        }
+    }
 }
 
 export interface Events {
-    'productsStatus/update': State['productsStatus']
+    'products/update': { goods: Good[], names: Catalog }
 
     'exchangeRate/update': undefined
 
