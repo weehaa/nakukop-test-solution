@@ -1,6 +1,7 @@
 import { StoreonModule } from 'storeon'
 import { Good, Catalog, State, Events } from './storeInterfaces'
-import {IProduct, IProducts} from "../interfaces/products";
+import {IProduct} from '../interfaces/products'
+import {ICategories} from '../interfaces/categories'
 
 interface Response {
     Success: string,
@@ -17,35 +18,28 @@ const getJSONData = async (url) => {
 export const goodsModule:  StoreonModule<State, Events> = store => {
     store.on('@init', () => {
         store.dispatch('goods/get')
-        return {goods: [], names:{}}
+        return {categories: {}, products: {}}
     })
     store.on('goods/get', async () => {
-        console.log('goods get')
         try {
             // goods request
             const goods: Response = await getJSONData(`${process.env.API_URL}/products.json`)
             // names request
             const names: Catalog = await getJSONData(`${process.env.API_URL}/names.json`)
 
-            // save names and goods into store
-            store.dispatch('goods/update', goods.Value.Goods)
-            store.dispatch('names/update', names)
             store.dispatch('products/update', { goods: goods.Value.Goods, names: names})
         } catch (e) {
             console.log(e)
             // store.dispatch('errors/server-error')
         }
     })
-    store.on('goods/update', ({ goods} , newGoods) => ({goods: newGoods}))
-    store.on('names/update', ({ names} , newNames) => ({names: newNames}))
-
     store.on('products/update', (State , {goods, names}) => {
-        const categoriesAndProducts = Object.entries(names)
+        return Object.entries(names)
             .reduce((acc, [catId, catItem]) => {
-                const category = {
+                const category: ICategories = {
                     [+catId]: {
                         name: catItem["G"],
-                        products: Object.keys(catItem["B"]).map((id) => +id),
+                        productIds: Object.keys(catItem["B"]).map((id) => +id),
                         id: +catId}
                 }
                 const catProducts = Object.entries(catItem["B"])
@@ -66,6 +60,5 @@ export const goodsModule:  StoreonModule<State, Events> = store => {
                     products: {...acc.products, ...catProducts}
                 }
             }, {categories: {}, products: {}})
-        return categoriesAndProducts
     })
 }

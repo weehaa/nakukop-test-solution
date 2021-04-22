@@ -1,28 +1,22 @@
-import {useStoreon} from '../store'
+import React from 'react'
 
-import {Good, Items} from '../store/storeInterfaces'
 import ItemLayout from "./Item.Layout";
-import React from "react";
+import {IProduct} from "../interfaces/products";
 
-interface CategoryLayoutProps {
-    categoryName: string
-    catItems: any
+interface ICategoryLayoutProps  {
+    name: string
+    products: IProduct[]
 }
-const CategoryLayout = ({categoryName, catItems}: CategoryLayoutProps) => {
-    const {goods} = useStoreon('goods')
-    const items = catItems.map(([itemId, item]) => {
-        const itemDetails: Good[] = goods.filter(({T}) => T === +itemId)
-        // don't show item if no details
-        if (!itemDetails.length) return null
-        const {C: priceUSD, P: count } = itemDetails[0]
-        return <ItemLayout key={itemId} id={itemId} name={item["N"]} priceUSD={priceUSD} count={count}/>
+
+const CategoryLayout = ({name, products}: ICategoryLayoutProps) => {
+    const productList = products.map(item => {
+        return <ItemLayout key={item.id} {...item} />
     })
 
-    if (!items.join('')) return null
     return (
         <>
-            <h3>{categoryName}</h3>
-            {items}
+            <h3>{name}</h3>
+            {productList}
         </>
     )
 }

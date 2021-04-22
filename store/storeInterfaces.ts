@@ -1,3 +1,6 @@
+import {ICategories} from "../interfaces/categories";
+import {IProducts} from "../interfaces/products";
+
 export interface Item {
     N: string   //name
     T: any
@@ -17,8 +20,6 @@ export interface Catalog {
     [categoryId: number]: Group
 }
 
-export interface Category {}
-
 export interface Good {
     B: boolean
     C: number  // price
@@ -27,44 +28,17 @@ export interface Good {
     T: number   // product id
 }
 
-
-
 export interface State {
     // Exchange Rate State
     exchangeRate: number
     prevExchangeRate: number
-    // Goods state
-    goods: Good[]
-    // Names State
-    names: Catalog
-    // products
-
-    categories: {
-        [id: number]: {
-            id: number
-            name: string
-        }
-    }
-
-    items: {
-        [id: number]: {
-            id: number
-            name: string
-            price: number
-            groupId: number
-            count: number
-        }
-    }
+    // products State
+    categories: ICategories
+    products: IProducts
 }
 
 export interface Events {
     'products/update': { goods: Good[], names: Catalog }
-
     'exchangeRate/update': undefined
-
-    'goods/update': Array<Good>
     'goods/get': undefined
-
-    'names/update': Catalog
-    'names/get': undefined
 }
