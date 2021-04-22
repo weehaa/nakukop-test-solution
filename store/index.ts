@@ -6,9 +6,10 @@ import { storeonDevtools } from 'storeon/devtools';
 
 import {exchangeRateModule} from './exchangeRate'
 import {goodsModule} from './products'
+import {cartModule} from './cart'
 
 export const store = createStoreon(
-    [exchangeRateModule, goodsModule, process.env.NODE_ENV !== 'production' && storeonDevtools]
+    [exchangeRateModule, goodsModule, cartModule, process.env.NODE_ENV !== 'production' && storeonDevtools]
 )
 
 export const CustomContext = createContext(store)

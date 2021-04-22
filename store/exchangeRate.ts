@@ -1,5 +1,5 @@
 import { StoreonModule } from 'storeon'
-import { State, Events } from "./storeInterfaces";
+import { State, Events } from "../interfaces/store";
 import getExchangeRate from "../helpers/getExchangeRate";
 
 export const exchangeRateModule:  StoreonModule<State, Events> = store => {

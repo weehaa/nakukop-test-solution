@@ -4,6 +4,7 @@ import {useStoreon} from '../store'
 
 import MainLayout from '../components/Main.layout'
 import CategoryList from '../components/CategoryList'
+import Cart from '../components/Cart'
 
 const Index: React.FC = () => {
     const {dispatch, categories} = useStoreon('categories')
@@ -18,6 +19,7 @@ const Index: React.FC = () => {
         <MainLayout title='Каталог товаров'>
             <h1>Каталог товаров</h1>
             <CategoryList categories={Object.values(categories)} />
+            <Cart />
         </MainLayout>
     )
 }

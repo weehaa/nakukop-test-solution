@@ -5,9 +5,9 @@ import classes from '../styles/item.module.css'
 const ItemLayout = ({name, priceUSD, count, id}: IProduct) => {
 
     const addToCart = (): void => {
-        console.log('add to cart', id, name )
+        dispatch('cart/add', id)
     }
-    const {exchangeRate, prevExchangeRate} =
+    const {dispatch, exchangeRate, prevExchangeRate} =
         useStoreon('exchangeRate', 'prevExchangeRate')
 
     const rateChange = prevExchangeRate - exchangeRate

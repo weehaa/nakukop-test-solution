@@ -1,5 +1,5 @@
 import { StoreonModule } from 'storeon'
-import { Good, Catalog, State, Events } from './storeInterfaces'
+import { Good, Catalog, State, Events } from '../interfaces/store'
 import {IProduct} from '../interfaces/products'
 import {ICategories} from '../interfaces/categories'
 
