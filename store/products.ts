@@ -1,5 +1,6 @@
 import { StoreonModule } from 'storeon'
 import { Good, Catalog, State, Events } from './storeInterfaces'
+import {IProduct, IProducts} from "../interfaces/products";
 
 interface Response {
     Success: string,
@@ -39,7 +40,7 @@ export const goodsModule:  StoreonModule<State, Events> = store => {
     store.on('names/update', ({ names} , newNames) => ({names: newNames}))
 
     store.on('products/update', (State , {goods, names}) => {
-        const categories = Object.entries(names)
+        const categoriesAndProducts = Object.entries(names)
             .reduce((acc, [catId, catItem]) => {
                 const category = {
                     [+catId]: {
@@ -51,10 +52,10 @@ export const goodsModule:  StoreonModule<State, Events> = store => {
                     .reduce((catProductsAcc, [productId, productItem]) => {
                         const itemDetails: Good = goods.filter(({T}) => T === +productId)[0]
                         if (itemDetails === undefined) return {...catProductsAcc}
-                        const product = {
+                        const product: IProduct = {
                             name: productItem["N"],
-                            price: +itemDetails["C"],
-                            groupId: +itemDetails["G"],
+                            priceUSD: +itemDetails["C"],
+                            categoryId: +itemDetails["G"],
                             count: +itemDetails["P"],
                             id: +productId,
                         }
@@ -65,7 +66,6 @@ export const goodsModule:  StoreonModule<State, Events> = store => {
                     products: {...acc.products, ...catProducts}
                 }
             }, {categories: {}, products: {}})
-        console.log(categories)
-
+        return categoriesAndProducts
     })
 }

@@ -1,14 +1,7 @@
-import React from 'react'
 import {useStoreon} from '../store'
+import {IProduct} from '../interfaces/products'
 
-interface ItemLayoutProps {
-    id: number
-    name: string
-    priceUSD: number
-    count: number
-}
-
-const ItemLayout = ({name, priceUSD, count}: ItemLayoutProps) => {
+const ItemLayout = ({name, priceUSD, count}: IProduct) => {
     const {exchangeRate, prevExchangeRate} =
         useStoreon('exchangeRate', 'prevExchangeRate')
     const price: number = +(priceUSD * exchangeRate).toFixed(2)
