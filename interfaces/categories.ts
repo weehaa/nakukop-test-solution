@@ -1,9 +1,9 @@
 export interface ICategory {
-    id: number
+    id: string
     name: string
-    productIds: number[]
+    productIds: string[]
 }
 
 export interface ICategories {
-    [id: number]: ICategory
+    [id: string]: ICategory
 }

@@ -11,14 +11,13 @@ export interface State {
     products: IProducts
     // cart State
     cart: ICartItem
-    cartSum: number
 }
 
 export interface Events {
     'products/update': { goods: Good[], names: Catalog }
     'exchangeRate/update': undefined
     'goods/get': undefined
-    'cart/add': number  // productId
+    'cart/add': string  // productId
 }
 
 export interface Item {
@@ -27,7 +26,7 @@ export interface Item {
 }
 
 export interface Items {
-    [productId: number]: Item
+    [productId: string]: Item
 }
 
 export interface Group {
@@ -37,7 +36,7 @@ export interface Group {
 }
 
 export interface Catalog {
-    [categoryId: number]: Group
+    [categoryId: string]: Group
 }
 
 export interface Good {

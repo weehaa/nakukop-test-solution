@@ -1,11 +1,11 @@
 export interface IProduct {
-    id: number
+    id: string
     name: string
     priceUSD: number
-    categoryId: number
+    categoryId: string
     count: number
 }
 
 export interface IProducts {
-    [id: number]: IProduct
+    [id: string]: IProduct
 }

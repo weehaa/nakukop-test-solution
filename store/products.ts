@@ -37,10 +37,10 @@ export const goodsModule:  StoreonModule<State, Events> = store => {
         return Object.entries(names)
             .reduce((acc, [catId, catItem]) => {
                 const category: ICategories = {
-                    [+catId]: {
+                    [catId]: {
                         name: catItem["G"],
-                        productIds: Object.keys(catItem["B"]).map((id) => +id),
-                        id: +catId}
+                        productIds: Object.keys(catItem["B"]).map((id) => id),
+                        id: catId}
                 }
                 const catProducts = Object.entries(catItem["B"])
                     .reduce((catProductsAcc, [productId, productItem]) => {
@@ -49,11 +49,11 @@ export const goodsModule:  StoreonModule<State, Events> = store => {
                         const product: IProduct = {
                             name: productItem["N"],
                             priceUSD: +itemDetails["C"],
-                            categoryId: +itemDetails["G"],
+                            categoryId: itemDetails["G"].toString(),
                             count: +itemDetails["P"],
-                            id: +productId,
+                            id: productId,
                         }
-                        return {...catProductsAcc, [+productId]: product}
+                        return {...catProductsAcc, [productId]: product}
                     }, {})
                 return {...acc,
                     categories: {...acc.categories, ...category},

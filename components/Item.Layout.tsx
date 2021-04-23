@@ -15,10 +15,10 @@ const ItemLayout = ({name, priceUSD, count, id}: IProduct) => {
     if (rateChange > 0) clazz=classes.down
     if (rateChange < 0) clazz=classes.up
 
-    const price: number = +(priceUSD * exchangeRate).toFixed(2)
+    const price = (priceUSD * exchangeRate).toFixed(2)
     return (
         <>
-            <div>{name}({count})<span className={clazz}>{price}</span>RUR</div>
+            <div>{name}({count})<span className={clazz}>{price}</span>руб.<span>/шт.</span></div>
             <button onClick={addToCart}>Add to Cart</button>
         </>
     )
