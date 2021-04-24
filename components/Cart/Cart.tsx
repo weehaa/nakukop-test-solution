@@ -1,15 +1,23 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import {useStoreon} from '../../store'
 
 import CartItem from './CartItem'
 
 const Cart: React.FC = () => {
+
     const {cart, products, exchangeRate} =
         useStoreon('cart', 'products', 'exchangeRate')
+    const [isLoaded, setLoaded] = useState(false)
+
+    useEffect(() => {
+        if (Object.keys(products).length > 0 ) setLoaded(true)
+    }, [products])
 
     const cartItems = Object.entries(cart)
 
     if (!cartItems.length) return <p>Ваша корзина пуста</p>
+
+    if (!isLoaded) return <p>Loading...</p>
 
     const cartPrice = (cartItems.reduce((acc, [id, {count}]) => {
         return acc + (products[id].priceUSD * count)
