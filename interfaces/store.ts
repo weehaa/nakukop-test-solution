@@ -18,6 +18,11 @@ export interface Events {
     'exchangeRate/update': undefined
     'goods/get': undefined
     'cart/add': string  // productId
+    'cart/delete': string  // productId
+    'cart/update': {
+        id: string,     // productId
+        count: number
+    }
 }
 
 export interface Item {
