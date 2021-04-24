@@ -1,0 +1,9 @@
+.hide {
+    display: none;
+}
+
+.warn {
+    display: block;
+    color: red;
+    font-size: 0.8rem;
+}
