@@ -15,6 +15,7 @@ export interface State {
 
 export interface Events {
     'products/update': { goods: Good[], names: Catalog }
+    'products/updatePrice': undefined
     'exchangeRate/update': undefined
     'goods/get': undefined
     'cart/add': string  // productId

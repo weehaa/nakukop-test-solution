@@ -33,7 +33,7 @@ export const goodsModule:  StoreonModule<State, Events> = store => {
             // store.dispatch('errors/server-error')
         }
     })
-    store.on('products/update', (State , {goods, names}) => {
+    store.on('products/update', ({exchangeRate} , {goods, names}) => {
         return Object.entries(names)
             .reduce((acc, [catId, catItem]) => {
                 const category: ICategories = {
@@ -49,6 +49,7 @@ export const goodsModule:  StoreonModule<State, Events> = store => {
                         const product: IProduct = {
                             name: productItem["N"],
                             priceUSD: +itemDetails["C"],
+                            price: +(itemDetails["C"]*exchangeRate).toFixed(2),
                             categoryId: itemDetails["G"].toString(),
                             count: +itemDetails["P"],
                             id: productId,
@@ -60,5 +61,11 @@ export const goodsModule:  StoreonModule<State, Events> = store => {
                     products: {...acc.products, ...catProducts}
                 }
             }, {categories: {}, products: {}})
+    })
+    store.on('products/updatePrice', ({exchangeRate, products}) => {
+        const updatedProducts = Object.entries(products).reduce((acc, [id,product]) => {
+            return {...acc, [id]: {...product, price: (product.priceUSD * exchangeRate).toFixed(2)}}
+        }, {})
+        return {products: {...updatedProducts}}
     })
 }

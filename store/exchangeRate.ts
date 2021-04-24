@@ -17,6 +17,7 @@ export const exchangeRateModule:  StoreonModule<State, Events> = ({on, dispatch}
         let rateMove = ''
         if (rateDiff > 0) rateMove = 'rate-up'
         if (rateDiff < 0) rateMove = 'rate-down'
+        dispatch('products/updatePrice')
         return {
             rateMove,
             exchangeRate: newRate
