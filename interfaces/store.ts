@@ -5,7 +5,7 @@ import {ICartItem} from './cart'
 export interface State {
     // Exchange Rate State
     exchangeRate: number
-    prevExchangeRate: number
+    rateMove: string
     // products State
     categories: ICategories
     products: IProducts
