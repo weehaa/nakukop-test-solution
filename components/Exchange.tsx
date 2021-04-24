@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react'
 import { useStoreon } from '../store'
 
-const ExchangeLayout: React.FC = () => {
+const Exchange: React.FC = () => {
     const { dispatch, exchangeRate } = useStoreon('exchangeRate')
     useEffect(() => {
         let exchangeTimer = setTimeout(() => dispatch('exchangeRate/update'),
@@ -11,4 +11,4 @@ const ExchangeLayout: React.FC = () => {
     return <p>Текущий курс: {exchangeRate}</p>
 }
 
-export default ExchangeLayout
+export default Exchange

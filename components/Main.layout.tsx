@@ -1,7 +1,7 @@
 import React from 'react'
 import Link from "next/link"
 import Head from "next/head";
-import ExchangeLayout from "./Exchange.layout";
+import Exchange from "./Exchange";
 
 const MainLayout = ({ children, title = '', }) => {
     return (
@@ -13,7 +13,7 @@ const MainLayout = ({ children, title = '', }) => {
                 <Link href={'/'}><a>Каталог</a></Link>
                 <Link href={'/cart'}><a>Корзина</a></Link>
             </nav>
-            <ExchangeLayout />
+            <Exchange />
             <main>
                 {children}
             </main>

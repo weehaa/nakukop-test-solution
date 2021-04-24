@@ -1,7 +1,8 @@
 import React from 'react'
 
-import ItemLayout from "./Item.Layout";
-import {IProduct} from "../interfaces/products";
+import Item from './Item'
+
+import {IProduct} from '../interfaces/products'
 
 interface ICategoryLayoutProps  {
     name: string
@@ -10,7 +11,7 @@ interface ICategoryLayoutProps  {
 
 const CategoryLayout = ({name, products}: ICategoryLayoutProps) => {
     const productList = products.map(item => {
-        return <ItemLayout key={item.id} {...item} />
+        return <Item key={item.id} {...item} />
     })
 
     return (

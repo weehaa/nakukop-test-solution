@@ -20,7 +20,6 @@ const CategoryList = ({categories}: ICategoryListProps) => {
             {categoryList}
         </section>
     )
-
 }
 
 export default CategoryList
