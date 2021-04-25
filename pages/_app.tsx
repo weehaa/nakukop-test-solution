@@ -1,5 +1,7 @@
 import React from 'react'
 import type { AppProps } from 'next/app'
+
+import { ChakraProvider } from "@chakra-ui/react"
 import '../styles/main.css'
 
 import {store} from '../store'
@@ -11,7 +13,9 @@ export default function MyApp({ Component, pageProps }: AppProps) {
     return (
         <CustomContext.Provider value={store}>
             <ErrorBoundary>
-                <Component {...pageProps} />
+                <ChakraProvider>
+                    <Component {...pageProps} />
+                </ChakraProvider>
             </ErrorBoundary>
         </CustomContext.Provider>
     )
