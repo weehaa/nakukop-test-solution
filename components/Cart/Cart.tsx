@@ -5,8 +5,8 @@ import CartItem from './CartItem'
 
 const Cart: React.FC = () => {
 
-    const {cart, products, exchangeRate} =
-        useStoreon('cart', 'products', 'exchangeRate')
+    const {cart, products} =
+        useStoreon('cart', 'products')
     const [isLoaded, setLoaded] = useState(false)
 
     useEffect(() => {
@@ -18,10 +18,6 @@ const Cart: React.FC = () => {
     if (!cartItems.length) return <p>Ваша корзина пуста</p>
 
     if (!isLoaded) return <p>Loading...</p>
-
-    const cartPrice = (cartItems.reduce((acc, [id, {count}]) => {
-        return acc + (products[id].priceUSD * count)
-    }, 0) * exchangeRate).toFixed(2)
 
     return (
         <table>
@@ -35,17 +31,24 @@ const Cart: React.FC = () => {
             <tbody>
             {
                 // Cart items list
-                cartItems.map(([id, {count: cartCount} ]) => {
-                    const price: number = +(products[id].priceUSD * exchangeRate).toFixed(2)
-                    return <CartItem key={id} {...products[id]} price={price} cartCount={cartCount}/>
-                })
+                cartItems.map(([id, {count: cartCount} ]) =>
+                    <CartItem key={id} {...products[id]} cartCount={cartCount}/>)
             }
             </tbody>
 
             <tfoot>
                 <tr>
                     <td colSpan={4}>
-                        <h4>Общая стоимость: <span>{cartPrice}</span> руб.</h4>
+                        <h4>Общая стоимость:
+                            <span>
+                                {
+                                    // Cart price
+                                    cartItems.reduce((acc, [id, {count}]) =>
+                                        (acc + (products[id].price * count)), 0).toFixed(2)
+                                }
+                            </span>
+                            руб.
+                        </h4>
                     </td>
                 </tr>
             </tfoot>
