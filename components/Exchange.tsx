@@ -4,10 +4,10 @@ import { useStoreon } from '../store'
 const Exchange: React.FC = () => {
     const { dispatch, exchangeRate } = useStoreon('exchangeRate')
     useEffect(() => {
-        let exchangeTimer = setTimeout(() => dispatch('exchangeRate/update'),
+        let exchangeTimer = setInterval(() => dispatch('exchangeRate/update'),
             +process.env.RATE_REFRESH_INTERVAL * 1000)
-        return () => clearTimeout(exchangeTimer)
-    }, [exchangeRate])
+        return () => clearInterval(exchangeTimer)
+    }, [])
     return <p>Текущий курс: {exchangeRate}</p>
 }
 
