@@ -3,9 +3,8 @@ import React, {useEffect} from 'react'
 import {useStoreon} from '../store'
 
 import MainLayout from '../components/Main.layout'
-import CategoryList from '../components/CategoryList/CategoryList'
-import Cart from '../components/Cart/Cart'
-import Exchange from '../components/Exchange'
+import CartLayout from '../components/Cart'
+import CategoriesLayout from '../components/Categories'
 
 const Index: React.FC = () => {
     const {dispatch, categories, products} = useStoreon('categories', 'products')
@@ -18,11 +17,8 @@ const Index: React.FC = () => {
 
     return (
         <MainLayout title='Каталог товаров'>
-            <h1>Каталог товаров</h1>
-            <Exchange />
-            <CategoryList categories={Object.values(categories)} products={products}/>
-            <h2>Корзина</h2>
-            <Cart />
+            <CategoriesLayout categories={categories} products={products} />
+            <CartLayout />
         </MainLayout>
     )
 }

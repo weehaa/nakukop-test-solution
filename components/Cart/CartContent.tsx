@@ -3,10 +3,10 @@ import {useStoreon} from '../../store'
 
 import CartItem from './CartItem'
 
-const Cart: React.FC = () => {
-
+const CartContent: React.FC = () => {
     const {cart, products} =
         useStoreon('cart', 'products')
+
     const [isLoaded, setLoaded] = useState(false)
 
     useEffect(() => {
@@ -56,4 +56,4 @@ const Cart: React.FC = () => {
     )
 }
 
-export default Cart
+export default CartContent
