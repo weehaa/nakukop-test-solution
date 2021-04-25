@@ -1,50 +1,21 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import {useStoreon} from '../../store'
 
-import CartItem from './CartItem'
+import CartTable from './CartTable'
 
 const CartContent: React.FC = () => {
-    const {cart, products} = useStoreon('cart', 'products')
+    const {cart} = useStoreon('cart')
+
+    // to prevent Warning Expected server HTML to contain...
+    const [cartContent, setCartContent] = useState(<p>Ваша корзина пуста</p>)
 
     const cartItems = Object.entries(cart)
 
-    if (!cartItems.length) return <p>Ваша корзина пуста</p>
+    useEffect(() => {
+        if (cartItems.length) setCartContent(<CartTable />)
+    }, [])
 
-    return (
-        <table>
-            <thead>
-                <tr>
-                    <th>Наименование</th>
-                    <th>Количество</th>
-                    <th>Цена</th>
-                </tr>
-            </thead>
-            <tbody>
-            {
-                // Cart items list
-                cartItems.map(([id, {count: cartCount} ]) =>
-                    <CartItem key={id} {...products[id]} cartCount={cartCount}/>)
-            }
-            </tbody>
-
-            <tfoot>
-                <tr>
-                    <td colSpan={4}>
-                        <h4>Общая стоимость:
-                            <span>
-                                {
-                                    // Cart price
-                                    cartItems.reduce((acc, [id, {count}]) =>
-                                        (acc + (products[id].price * count)), 0).toFixed(2)
-                                }
-                            </span>
-                            руб.
-                        </h4>
-                    </td>
-                </tr>
-            </tfoot>
-        </table>
-    )
+    return cartContent
 }
 
 export default CartContent
