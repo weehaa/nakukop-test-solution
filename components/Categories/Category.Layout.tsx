@@ -3,6 +3,7 @@ import React from 'react'
 import Item from '../Item'
 
 import {IProduct} from '../../interfaces/products'
+import {Table, Tbody, Td, Tr} from '@chakra-ui/table'
 
 interface ICategoryLayoutProps  {
     name: string
@@ -14,7 +15,17 @@ const CategoryLayout = ({name, products}: ICategoryLayoutProps) => {
         return <Item key={item.id} {...item} />
     })
 
-    return <><h3>{name}</h3>{productList}</>
+    return (
+        <>
+
+                    <Tr>
+                        <h3>{name}</h3>
+                    </Tr>
+
+                    {productList}
+
+        </>
+    )
 }
 
 export default CategoryLayout

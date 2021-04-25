@@ -3,6 +3,16 @@ import React from 'react'
 import {useStoreon} from '../../store'
 
 import {IProduct} from '../../interfaces/products'
+import {Td, Tr} from '@chakra-ui/table'
+import {Input} from '@chakra-ui/input'
+import {
+    NumberDecrementStepper,
+    NumberIncrementStepper,
+    NumberInput,
+    NumberInputField,
+    NumberInputStepper
+} from "@chakra-ui/number-input";
+import {Button} from '@chakra-ui/button'
 
 interface ICartItemProps extends IProduct{
     price: number
@@ -17,7 +27,7 @@ const CartItem = ({id, name, count, price, cartCount}: ICartItemProps) => {
     }
 
     const onInputChange = (value): void => {
-        if (isNaN(value) || value<1) value = 1
+        // if (isNaN(value) || value<1) value = 1
         dispatch('cart/update', {id, count: +value})
     }
 
@@ -25,16 +35,17 @@ const CartItem = ({id, name, count, price, cartCount}: ICartItemProps) => {
         <tr>
             <td>{name}</td>
             <td>
-                <input
-                    type="number"
-                    value={cartCount}
-                    onChange={({target: {value}}) =>
-                        onInputChange(value)}
-                />
+                <NumberInput defaultValue={cartCount} max={count} min={1} size="md" onChange={onInputChange}>
+                    <NumberInputField />
+                    <NumberInputStepper>
+                        <NumberIncrementStepper />
+                        <NumberDecrementStepper />
+                    </NumberInputStepper>
+                </NumberInput>
                 <div className={count === cartCount ? 'warn' : 'hide'}>Количество ограничено</div>
             </td>
             <td><b>{price} руб.</b>/шт.</td>
-            <td onClick={onDelete}>Удалить</td>
+            <td ><Button variant="outline" colorScheme="red" onClick={onDelete}>Удалить</Button></td>
         </tr>
     )
 }

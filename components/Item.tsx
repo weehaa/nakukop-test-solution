@@ -1,6 +1,11 @@
+import React from 'react'
+
 import {useStoreon} from '../store'
 import {IProduct} from '../interfaces/products'
 import classes from '../styles/item.module.css'
+import {Table, Tbody, Td, Tr} from '@chakra-ui/table'
+import {Button} from '@chakra-ui/button'
+
 
 const Item = ({name, price, count, id}: IProduct) => {
     const {dispatch, rateMove} =
@@ -11,12 +16,13 @@ const Item = ({name, price, count, id}: IProduct) => {
     }
 
     return (
-        <div>
-            {name} ({count})
-            <span className={classes[rateMove]}> {price}</span>руб.
-            <span>/шт. </span>
-            <button onClick={addToCart}>Add to Cart</button>
-        </div>
+
+                <Tr>
+                    <Td>{name} ({count})</Td>
+                    <Td className={classes[rateMove]}> {price} руб./шт. </Td>
+                    <Td><Button onClick={addToCart}>Add to Cart</Button></Td>
+                </Tr>
+
     )
 }
 

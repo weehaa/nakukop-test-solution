@@ -3,6 +3,7 @@ import React from 'react'
 import {ICategory} from '../../interfaces/categories'
 import CategoryLayout from './Category.Layout'
 import {IProducts} from '../../interfaces/products'
+import {Table, Tbody} from '@chakra-ui/table'
 
 interface ICategoryListProps {
     categories: ICategory[]
@@ -11,7 +12,8 @@ interface ICategoryListProps {
 
 const CategoryList = ({categories, products}: ICategoryListProps) => {
     return (
-        <section>
+        <Table>
+            <Tbody>
             {
                 categories.map(({name, id}) => {
                     const catProducts = Object.values(products)
@@ -19,7 +21,8 @@ const CategoryList = ({categories, products}: ICategoryListProps) => {
                     if (!catProducts.length) return
                     return <CategoryLayout key={id} name={name} products={catProducts} />})
             }
-        </section>
+            </Tbody>
+        </Table>
     )
 }
 
