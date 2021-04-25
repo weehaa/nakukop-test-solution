@@ -1,3 +1,5 @@
+import React from 'react'
+
 import {useStoreon} from '../../store'
 
 import {IProduct} from '../../interfaces/products'

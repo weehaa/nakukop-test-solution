@@ -1,23 +1,14 @@
-import React, {useEffect, useState} from 'react'
+import React from 'react'
 import {useStoreon} from '../../store'
 
 import CartItem from './CartItem'
 
 const CartContent: React.FC = () => {
-    const {cart, products} =
-        useStoreon('cart', 'products')
-
-    const [isLoaded, setLoaded] = useState(false)
-
-    useEffect(() => {
-        if (Object.keys(products).length > 0 ) setLoaded(true)
-    }, [products])
+    const {cart, products} = useStoreon('cart', 'products')
 
     const cartItems = Object.entries(cart)
 
     if (!cartItems.length) return <p>Ваша корзина пуста</p>
-
-    if (!isLoaded) return <p>Loading...</p>
 
     return (
         <table>
@@ -57,3 +48,4 @@ const CartContent: React.FC = () => {
 }
 
 export default CartContent
+

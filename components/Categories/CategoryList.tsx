@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React from 'react'
 
 import {ICategory} from '../../interfaces/categories'
 import CategoryLayout from './Category.Layout'
@@ -10,17 +10,17 @@ interface ICategoryListProps {
 }
 
 const CategoryList = ({categories, products}: ICategoryListProps) => {
-    const [categoryList, setCategoryList] = useState([])
-
-    useEffect(() => {
-        setCategoryList(categories.map(({name, id}) => {
-            const catProducts = Object.values(products).filter(({categoryId}) => categoryId === id)
-            if (!catProducts.length) return
-            return <CategoryLayout key={id} name={name} products={catProducts} />
-        }))
-    }, [categories])
-
-    return <section>{categoryList}</section>
+    return (
+        <section>
+            {
+                categories.map(({name, id}) => {
+                    const catProducts = Object.values(products)
+                        .filter(({categoryId}) => categoryId === id)
+                    if (!catProducts.length) return
+                    return <CategoryLayout key={id} name={name} products={catProducts} />})
+            }
+        </section>
+    )
 }
 
 export default CategoryList

@@ -11,8 +11,8 @@ import {cartModule} from './cart'
 
 export const store = createStoreon(
     [
-        exchangeRateModule,
         goodsModule,
+        exchangeRateModule,
         cartModule,
         persistState(['cart']),
         process.env.NODE_ENV !== 'production' && storeonDevtools

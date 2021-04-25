@@ -14,7 +14,7 @@ export interface State {
 }
 
 export interface Events {
-    'products/update': { goods: Good[], names: Catalog }
+    'products/save': { goods: Good[], names: Catalog }
     'products/updatePrice': undefined
     'exchangeRate/update': undefined
     'goods/get': undefined
@@ -51,5 +51,12 @@ export interface Good {
     G: number  // group id
     P: number  // quantity
     T: number   // product id
+}
+
+export interface Response {
+    Success: string,
+    Value?: {
+        Goods: Array<Good>
+    }
 }
 
