@@ -4,18 +4,23 @@ import {useStoreon} from '../../store'
 import CartTable from './CartTable'
 
 const CartContent: React.FC = () => {
-    const {cart} = useStoreon('cart')
+    const {cart, products} = useStoreon('cart', 'products' )
 
-    // to prevent Warning Expected server HTML to contain...
-    const [cartContent, setCartContent] = useState(<p>Ваша корзина пуста</p>)
+    const [state, setState] = useState<'loading'|'loaded'>('loading')
 
     const cartItems = Object.entries(cart)
 
     useEffect(() => {
-        if (cartItems.length) setCartContent(<CartTable />)
-    }, [])
+        if (Object.keys(products).length) setState('loaded')
+    }, [products])
 
-    return cartContent
+    switch (state) {
+        case 'loading':
+            return <p>Loading...</p>
+        case 'loaded':
+            if (!cartItems.length) return <p>Ваша корзина пуста</p>
+            return <CartTable cart={cart} products={products}/>
+    }
 }
 
 export default CartContent
