@@ -2,8 +2,7 @@ import React from 'react'
 import {useStoreon} from '../../store'
 
 import CartItem from './CartItem'
-import {Table} from "@chakra-ui/table";
-import {Heading} from "@chakra-ui/layout";
+import {Table, Tbody, Td, Tfoot, Th, Thead, Tr} from '@chakra-ui/table'
 
 const CartTable: React.FC = () => {
     const {cart, products} = useStoreon('cart', 'products')
@@ -15,26 +14,24 @@ const CartTable: React.FC = () => {
         <CartItem key={id} {...products[id]} cartCount={cartCount}/>)
 
     return (
-        <table>
-            <thead>
-            <tr>
-                <th>Наименование</th>
-                <th>Количество</th>
-                <th>Цена</th>
-            </tr>
-            </thead>
-            <tbody>
+        <Table mb={7} variant="striped" colorScheme="gray" size="sm">
+            <Thead>
+                <Tr>
+                    <Th>Наименование</Th>
+                    <Th>Количество</Th>
+                    <Th>Цена</Th>
+                    <Th>&nbsp;</Th>
+                </Tr>
+            </Thead>
+            <Tbody>
                 {cartItemsList}
-            </tbody>
-
-            <tfoot>
-            <tr>
-                <td colSpan={4}>
-                    <Heading size="sm">{`Общая стоимость: ${cartPrice} руб.`}</Heading>
-                </td>
-            </tr>
-            </tfoot>
-        </table>
+            </Tbody>
+            <Tfoot>
+                <Tr>
+                    <Td colSpan={4} isNumeric><b>{`Общая стоимость: ${cartPrice} руб.`}</b></Td>
+                </Tr>
+            </Tfoot>
+        </Table>
     )
 }
 

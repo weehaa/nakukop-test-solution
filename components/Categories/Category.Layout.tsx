@@ -3,7 +3,8 @@ import React from 'react'
 import Item from '../Item'
 
 import {IProduct} from '../../interfaces/products'
-import {Table, Tbody, Td, Tr} from '@chakra-ui/table'
+import {Td, Tr} from '@chakra-ui/table'
+import {Heading} from '@chakra-ui/layout'
 
 interface ICategoryLayoutProps  {
     name: string
@@ -17,13 +18,12 @@ const CategoryLayout = ({name, products}: ICategoryLayoutProps) => {
 
     return (
         <>
-
-                    <Tr>
-                        <h3>{name}</h3>
-                    </Tr>
-
-                    {productList}
-
+            <Tr>
+                <Td>
+                    <Heading size="md">{name}</Heading>
+                </Td>
+            </Tr>
+            {productList}
         </>
     )
 }
