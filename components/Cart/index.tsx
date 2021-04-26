@@ -1,10 +1,13 @@
 import React from 'react'
 import CartContent from './CartContent'
+import {Heading} from '@chakra-ui/layout'
+
+
 
 const CartLayout = () => {
     return (
         <>
-            <h2>Корзина</h2>
+            <Heading size="lg" m={2}>Корзина</Heading>
             <CartContent />
         </>
     )
