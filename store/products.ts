@@ -4,7 +4,8 @@ import { Good, State, Events } from '../interfaces/store'
 import {IProduct} from '../interfaces/products'
 import {ICategories} from '../interfaces/categories'
 
-import getNamesAndGoods from "../helpers/getNamesAndGoods";
+import getNamesAndGoods from '../helpers/getNamesAndGoods'
+import isValidItem from '../helpers/isValidItem'
 
 export const goodsModule:  StoreonModule<State, Events> = ({on, dispatch}) => {
     on('@init', () => {
@@ -13,7 +14,7 @@ export const goodsModule:  StoreonModule<State, Events> = ({on, dispatch}) => {
     on('goods/get', async () => {
         try {
             const { names, goods } = await getNamesAndGoods()
-            dispatch('products/save', { goods, names})
+            dispatch('products/save', { goods, names })
         } catch (e) {
             console.log(e)
             // dispatch('errors/server-error')
@@ -37,7 +38,7 @@ export const goodsModule:  StoreonModule<State, Events> = ({on, dispatch}) => {
                 const catProducts = Object.entries(catItem["B"])
                     .reduce((catProductsAcc, [productId, productItem]) => {
                         const itemDetails: Good = goods.filter(({T}) => T === +productId)[0]
-                        if (itemDetails === undefined) return {...catProductsAcc}
+                        if (!isValidItem(itemDetails)) return {...catProductsAcc}
                         const product: IProduct = {
                             name: productItem["N"],
                             priceUSD: +itemDetails["C"],
