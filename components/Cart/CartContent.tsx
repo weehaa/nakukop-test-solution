@@ -6,21 +6,17 @@ import CartTable from './CartTable'
 const CartContent: React.FC = () => {
     const {cart, products} = useStoreon('cart', 'products' )
 
-    const [state, setState] = useState<'loading'|'loaded'>('loading')
+    const [isEmpty, setIsEmpty] = useState<boolean>(true)
 
-    const cartItems = Object.entries(cart)
+    const cartCount: number = Object.entries(cart).length
 
     useEffect(() => {
-        if (Object.keys(products).length) setState('loaded')
-    }, [products])
+        (cartCount === 0) ? setIsEmpty(true) : setIsEmpty(false)
+    }, [cartCount])
 
-    switch (state) {
-        case 'loading':
-            return <p>Loading...</p>
-        case 'loaded':
-            if (!cartItems.length) return <p>Ваша корзина пуста</p>
-            return <CartTable cart={cart} products={products}/>
-    }
+    if (isEmpty) return <p>Ваша корзина пуста</p>
+
+    return <CartTable cart={cart} products={products}/>
 }
 
 export default CartContent
