@@ -8,21 +8,21 @@ import CategoriesLayout from '../components/Categories'
 
 import getNamesAndGoods from '../helpers/getNamesAndGoods'
 
+import {GetServerSideProps} from 'next'
+import timeout from '../helpers/timeout'
+
 
 const Index = ({goods, names}) => {
     const {dispatch} = useStoreon()
 
     useEffect(() => {
-        let timer
-        const internal = +process.env.DATA_REFRESH_INTERVAL * 1000
-        setTimeout(() => {
-            timer = setInterval(() => dispatch('goods/get'), internal)
-        }, internal)
+        const interval = +process.env.DATA_REFRESH_INTERVAL * 1000
+        const timer = setInterval(() => dispatch('goods/get'), interval)
         return () => clearInterval(timer)
     }, [])
 
+    if (names && goods) dispatch('products/save', {goods, names})
 
-    dispatch('products/save', { goods, names })
     return (
         <MainLayout title='Каталог товаров'>
             <CategoriesLayout />
@@ -33,7 +33,12 @@ const Index = ({goods, names}) => {
 
 export default Index
 
-export async function getServerSideProps() {
-    const { names, goods } = await getNamesAndGoods()
-    return { props: { names, goods } }
+export const  getServerSideProps: GetServerSideProps = async () => {
+    try {
+        const result = await timeout(getNamesAndGoods(), 50)
+        return { props: result }
+    } catch (err) {
+        console.log(err)
+        return { props: {} }
+    }
 }
