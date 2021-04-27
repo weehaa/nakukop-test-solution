@@ -35,7 +35,7 @@ export default Index
 
 export const  getServerSideProps: GetServerSideProps = async () => {
     try {
-        const result = await timeout(getNamesAndGoods(), 50)
+        const result = await timeout(getNamesAndGoods())
         return { props: result }
     } catch (err) {
         console.log(err)
