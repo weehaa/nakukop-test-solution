@@ -27,7 +27,7 @@ export const goodsModule:  StoreonModule<State, Events> = ({on, dispatch}) => {
     *   products: {id: (name, priceUSD, price, categoryId, id}
     */
     on('products/save', ({exchangeRate} , {goods, names}) => {
-        return Object.entries(names)
+        const state = Object.entries(names)
             .reduce((acc, [catId, catItem]) => {
                 const category: ICategories = {
                     [catId]: {
@@ -53,6 +53,9 @@ export const goodsModule:  StoreonModule<State, Events> = ({on, dispatch}) => {
                     products: {...acc.products, ...catProducts}
                 }
             }, {categories: {}, products: {}})
+
+        dispatch('cart/refresh', state.products)
+        return state
     })
     on('products/updatePrice', ({exchangeRate, products}) => {
         const updatedProducts = Object.entries(products).reduce((acc, [id,product]) => {

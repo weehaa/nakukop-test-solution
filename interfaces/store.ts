@@ -24,6 +24,7 @@ export interface Events {
         id: string,     // productId
         count: number
     }
+    'cart/refresh': IProducts
 }
 
 export interface Item {
