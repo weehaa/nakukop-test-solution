@@ -11,6 +11,11 @@ export interface State {
     products: IProducts
     // cart State
     cart: ICartItem
+    // error State
+    error: {
+        title: string
+        message: string
+    }
 }
 
 export interface Events {
@@ -25,6 +30,7 @@ export interface Events {
         count: number
     }
     'cart/refresh': IProducts
+    'error/server-error': string
 }
 
 export interface Item {

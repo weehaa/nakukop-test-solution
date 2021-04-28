@@ -8,12 +8,14 @@ import { storeonDevtools } from 'storeon/devtools';
 import {exchangeRateModule} from './exchangeRate'
 import {goodsModule} from './products'
 import {cartModule} from './cart'
+import errorModule from './error'
 
 export const store = createStoreon(
     [
         goodsModule,
         exchangeRateModule,
         cartModule,
+        errorModule,
         persistState(['cart']),
         process.env.NODE_ENV !== 'production' && storeonDevtools
     ]

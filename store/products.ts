@@ -7,7 +7,7 @@ import {ICategories} from '../interfaces/categories'
 import getNamesAndGoods from '../helpers/getNamesAndGoods'
 import isValidItem from '../helpers/isValidItem'
 
-export const goodsModule:  StoreonModule<State, Events> = ({on, dispatch}) => {
+export const goodsModule: StoreonModule<State, Events> = ({on, dispatch}) => {
     on('@init', () => {
         return {categories: {}, products: {}}
     })
@@ -16,8 +16,7 @@ export const goodsModule:  StoreonModule<State, Events> = ({on, dispatch}) => {
             const { names, goods } = await getNamesAndGoods()
             dispatch('products/save', { goods, names })
         } catch (e) {
-            console.log(e)
-            // dispatch('errors/server-error')
+            dispatch('error/server-error', e.toString())
         }
     })
 
