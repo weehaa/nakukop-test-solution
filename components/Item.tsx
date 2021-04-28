@@ -33,7 +33,7 @@ const Item = ({name, price, count, id}: IProduct) => {
             </Td>
             <Td p={2}>
                 <Button onClick={addToCart} p={5}>
-                    <Icon boxSize={9} as={AiOutlineShoppingCart} />
+                    <Icon boxSize={9} as={AiOutlineShoppingCart} color='orange.400'/>
                 </Button>
             </Td>
         </Tr>
