@@ -6,6 +6,13 @@ import {IProduct} from '../../interfaces/products'
 
 import {Button} from '@chakra-ui/button'
 import {Td, Tr} from '@chakra-ui/table'
+import {
+    NumberDecrementStepper,
+    NumberIncrementStepper,
+    NumberInput,
+    NumberInputField,
+    NumberInputStepper
+} from '@chakra-ui/number-input'
 
 interface ICartItemProps extends IProduct{
     price: number
@@ -28,12 +35,18 @@ const CartItem = ({id, name, count, price, cartCount}: ICartItemProps) => {
         <Tr>
             <Td>{name}</Td>
             <Td>
-                <input
-                    type="number"
+                <NumberInput
+                    onChange={onInputChange}
                     value={cartCount}
-                    onChange={({target: {value}}) =>
-                        onInputChange(value)}
-                />
+                    max={count}
+                    bgColor="white"
+                >
+                    <NumberInputField />
+                    <NumberInputStepper>
+                        <NumberIncrementStepper />
+                        <NumberDecrementStepper />
+                    </NumberInputStepper>
+                </NumberInput>
                 <div className={count === cartCount ? 'warn' : 'hide'}>Количество ограничено</div>
             </Td>
             <Td className='price-cell' isNumeric><b>{price} руб.</b>/шт.</Td>
