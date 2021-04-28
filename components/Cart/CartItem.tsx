@@ -13,6 +13,8 @@ import {
     NumberInputField,
     NumberInputStepper
 } from '@chakra-ui/number-input'
+import { DeleteIcon } from '@chakra-ui/icons'
+
 
 interface ICartItemProps extends IProduct{
     price: number
@@ -39,6 +41,7 @@ const CartItem = ({id, name, count, price, cartCount}: ICartItemProps) => {
                     onChange={onInputChange}
                     value={cartCount}
                     max={count}
+                    w={100}
                     bgColor="white"
                 >
                     <NumberInputField />
@@ -49,8 +52,12 @@ const CartItem = ({id, name, count, price, cartCount}: ICartItemProps) => {
                 </NumberInput>
                 <div className={count === cartCount ? 'warn' : 'hide'}>Количество ограничено</div>
             </Td>
-            <Td className='price-cell' isNumeric><b>{price} руб.</b>/шт.</Td>
-            <Td ><Button variant="outline" colorScheme="red" onClick={onDelete}>Удалить</Button></Td>
+            <Td isNumeric><b>{price}</b> руб./шт.</Td>
+            <Td >
+                <Button bgColor="transparent" onClick={onDelete}>
+                    <DeleteIcon w={5} h={5} color="red.300"/>
+                </Button>
+            </Td>
         </Tr>
     )
 }
