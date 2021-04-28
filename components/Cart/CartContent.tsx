@@ -4,13 +4,14 @@ import {useStoreon} from '../../store'
 import CartTable from './CartTable'
 
 import {Spinner} from '@chakra-ui/spinner'
+import countObjKeys from '../../helpers/countObjKeys'
 
 const CartContent: React.FC = () => {
     const {cart, products} = useStoreon('cart', 'products' )
 
     const [isEmpty, setIsEmpty] = useState<boolean>(true)
 
-    const cartCount: number = Object.entries(cart).length
+    const cartCount: number = countObjKeys(cart)
 
     useEffect(() => {
         (cartCount === 0) ? setIsEmpty(true) : setIsEmpty(false)
@@ -18,7 +19,7 @@ const CartContent: React.FC = () => {
 
     if (isEmpty) return <p>Ваша корзина пуста</p>
 
-    if (!Object.keys(products).length) {
+    if (!countObjKeys(products)) {
         return (
             <Spinner
                 thickness="4px"

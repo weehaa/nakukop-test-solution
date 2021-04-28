@@ -1,10 +1,14 @@
 import React from 'react'
 
-import {ICategory} from '../../interfaces/categories'
-import CategoryLayout from './Category.Layout'
-import {IProducts} from '../../interfaces/products'
 import {Table, Tbody} from '@chakra-ui/table'
 import {Spinner} from '@chakra-ui/spinner'
+
+import countObjKeys from '../../helpers/countObjKeys'
+
+import {ICategory} from '../../interfaces/categories'
+import {IProducts} from '../../interfaces/products'
+
+import CategoryLayout from './Category.Layout'
 
 interface ICategoryListProps {
     categories: ICategory[]
@@ -12,7 +16,7 @@ interface ICategoryListProps {
 }
 
 const CategoryList = ({categories, products}: ICategoryListProps) => {
-    if (!Object.keys(products).length || !Object.keys(categories).length) {
+    if (!countObjKeys(products) || !countObjKeys(categories)) {
         return (
             <Spinner
                 thickness="4px"
@@ -31,7 +35,7 @@ const CategoryList = ({categories, products}: ICategoryListProps) => {
                 categories.map(({name, id}) => {
                     const catProducts = Object.values(products)
                         .filter(({categoryId}) => categoryId === id)
-                    if (!catProducts.length) return
+                    if (!countObjKeys(products)) return
                     return <CategoryLayout key={id} name={name} products={catProducts} />})
             }
             </Tbody>
