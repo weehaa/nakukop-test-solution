@@ -23,7 +23,11 @@ export const cartModule: StoreonModule<State, Events> = ({on, dispatch}) => {
     on('cart/refresh', ({cart}, products) => {
         Object.entries(cart).forEach(([id, {count}]) => {
             const product = products[id]
-            if (product === undefined || product.count < 1) { dispatch('cart/delete', id) }
+            // delete absent products from cart
+            if (typeof product === 'undefined' || product.count < 1) {
+                dispatch('cart/delete', id)
+                return
+            }
             if (count > product.count) { dispatch('cart/update', {id, count: product.count}) }
         })
     })

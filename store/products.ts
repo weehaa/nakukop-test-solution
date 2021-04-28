@@ -1,23 +1,25 @@
 import { StoreonModule } from 'storeon'
 
-import { Good, State, Events } from '../interfaces/store'
+import {Good, State, Events} from '../interfaces/store'
 import {IProduct} from '../interfaces/products'
 import {ICategories} from '../interfaces/categories'
 
 import getNamesAndGoods from '../helpers/getNamesAndGoods'
 import isValidItem from '../helpers/isValidItem'
 
+
 export const goodsModule: StoreonModule<State, Events> = ({on, dispatch}) => {
     on('@init', () => {
         return {categories: {}, products: {}}
     })
     on('goods/get', async () => {
+        let data = {names: {}, goods: []}
         try {
-            const { names, goods } = await getNamesAndGoods()
-            dispatch('products/save', { goods, names })
+            data = await getNamesAndGoods()
         } catch (e) {
             dispatch('error/server-error', e.toString())
         }
+        dispatch('products/save', {...data})
     })
 
     /**
