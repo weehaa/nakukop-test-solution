@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 
 import {useStoreon} from '../store'
 import {IProduct} from '../interfaces/products'
@@ -11,7 +11,13 @@ import RateMoveIcon from './RateMoveIcon'
 
 
 const Item = ({name, price, count, id}: IProduct) => {
-    const {dispatch} = useStoreon()
+    const {dispatch, cart} = useStoreon('cart')
+    const [cartCount, setCartCount] = useState<number>(0)
+
+    useEffect(() => {
+        const cartCount = (typeof cart[id] !== 'undefined') ? cart[id].count : 0
+        setCartCount(cartCount)
+    },[ cart[id]])
 
     const addToCart = (): void => {
         dispatch('cart/add', id)
@@ -20,17 +26,20 @@ const Item = ({name, price, count, id}: IProduct) => {
     return (
         <Tr>
             <Td p={2}>{name} ({count})</Td>
-            <Td pr={0} pl={5}>
+            <Td pr={0} pl={5} w={7}>
                 <RateMoveIcon />
             </Td>
-            <Td isNumeric p={2}>
-                <Text w={110}>
+            <Td p={2} w={120} isNumeric>
+                <Text>
                     {price} руб.
                 </Text>
             </Td>
-            <Td p={2}>
-                <Button onClick={addToCart} p={5}>
+            <Td p={0} w={110} >
+                <Button onClick={addToCart} p={5} w={110}>
                     <Icon boxSize={9} as={AiOutlineShoppingCart} color='orange.400'/>
+                    <Text fontSize="sm" pl={2} color={cartCount===count && 'red.300'}>
+                        {cartCount ? `(${cartCount})` : null}
+                    </Text>
                 </Button>
             </Td>
         </Tr>

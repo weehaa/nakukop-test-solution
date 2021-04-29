@@ -1,6 +1,5 @@
 import React from 'react'
 
-import {Table, Tbody} from '@chakra-ui/table'
 import {Spinner} from '@chakra-ui/spinner'
 
 import countObjKeys from '../../helpers/countObjKeys'
@@ -9,6 +8,7 @@ import {ICategory} from '../../interfaces/categories'
 import {IProducts} from '../../interfaces/products'
 
 import CategoryLayout from './Category.Layout'
+import {Accordion} from '@chakra-ui/accordion'
 
 interface ICategoryListProps {
     categories: ICategory[]
@@ -29,8 +29,7 @@ const CategoryList = ({categories, products}: ICategoryListProps) => {
     }
 
     return (
-        <Table>
-            <Tbody>
+        <Accordion defaultIndex={[0]} allowMultiple>
             {
                 categories.map(({name, id}) => {
                     const catProducts = Object.values(products)
@@ -38,8 +37,7 @@ const CategoryList = ({categories, products}: ICategoryListProps) => {
                     if (!countObjKeys(catProducts)) return
                     return <CategoryLayout key={id} name={name} products={catProducts} />})
             }
-            </Tbody>
-        </Table>
+        </Accordion>
     )
 }
 
