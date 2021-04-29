@@ -35,7 +35,7 @@ const CategoryList = ({categories, products}: ICategoryListProps) => {
                 categories.map(({name, id}) => {
                     const catProducts = Object.values(products)
                         .filter(({categoryId}) => categoryId === id)
-                    if (!countObjKeys(products)) return
+                    if (!countObjKeys(catProducts)) return
                     return <CategoryLayout key={id} name={name} products={catProducts} />})
             }
             </Tbody>
