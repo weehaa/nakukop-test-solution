@@ -1,7 +1,8 @@
 import React, {useEffect} from 'react'
 import { useStoreon } from '../store'
 
-import { Text } from '@chakra-ui/layout'
+import { Box } from '@chakra-ui/layout'
+import RateMoveIcon from './RateMoveIcon'
 
 const Exchange: React.FC = () => {
     const { dispatch, exchangeRate } = useStoreon('exchangeRate')
@@ -10,7 +11,11 @@ const Exchange: React.FC = () => {
             +process.env.RATE_REFRESH_INTERVAL * 1000)
         return () => clearInterval(exchangeTimer)
     }, [])
-    return <Text>Текущий курс: {exchangeRate} руб./$</Text>
+    return (
+        <Box>
+            Текущий курс: <RateMoveIcon /> {exchangeRate} руб./$
+        </Box>
+    )
 }
 
 export default Exchange

@@ -6,12 +6,12 @@ import {IProduct} from '../interfaces/products'
 import {Td, Tr} from '@chakra-ui/table'
 import {Button} from '@chakra-ui/button'
 import { Icon, Text } from "@chakra-ui/react"
-import { AiOutlineShoppingCart, AiFillCaretUp, AiFillCaretDown } from 'react-icons/ai'
+import { AiOutlineShoppingCart } from 'react-icons/ai'
+import RateMoveIcon from './RateMoveIcon'
 
 
 const Item = ({name, price, count, id}: IProduct) => {
-    const {dispatch, rateMove} =
-        useStoreon('rateMove')
+    const {dispatch} = useStoreon()
 
     const addToCart = (): void => {
         dispatch('cart/add', id)
@@ -21,10 +21,7 @@ const Item = ({name, price, count, id}: IProduct) => {
         <Tr>
             <Td p={2}>{name} ({count})</Td>
             <Td pr={0} pl={5}>
-                { rateMove === 'rate-up' &&
-                    <Icon as={AiFillCaretUp} boxSize={6} color='red.300' d='inline'/> }
-                { rateMove === 'rate-down' &&
-                    <Icon as={AiFillCaretDown} boxSize={6} color='green.300' d='inline'/> }
+                <RateMoveIcon />
             </Td>
             <Td isNumeric p={2}>
                 <Text w={110}>
